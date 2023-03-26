@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { listProductDetails } from "../actions/productActions";
 import Loader from "../components/Loader";
 
@@ -18,16 +18,15 @@ const ProductScreen = ({ history }) => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
-
+  const navigate = useNavigate();
   const params = useParams();
-  console.log({ params });
 
   useEffect(() => {
     dispatch(listProductDetails(params.id));
   }, [dispatch, params]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${params.id}?qty=${qty}`);
+    navigate(`/cart/${params.id}?qty=${qty}`);
   };
 
   return (
